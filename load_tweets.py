@@ -291,7 +291,7 @@ def insert_tweet(connection,tweet):
              'favorite_count': tweet['favorite_count'],
              'quote_count': tweet['quote_count'],
              'withheld_copyright': tweet.get('withheld_copyright', False),
-             'withheld_in_countries': remove_nulls(tweet.get('withheld_in_countries')),
+             'withheld_in_countries': tweet.get('withheld_in_countries'),
              'source': remove_nulls(tweet['source']),
              'text': remove_nulls(text),
              'country_code': remove_nulls(country_code),
