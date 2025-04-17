@@ -32,9 +32,6 @@ CREATE TABLE users (
     location TEXT,
     description TEXT,
     withheld_in_countries VARCHAR(2)[]
-    /*
-    FOREIGN KEY (id_urls) REFERENCES urls(id_urls) DEFERRABLE INITIALLY DEFERRED
-    */	
 );
 
 /*
@@ -76,9 +73,6 @@ CREATE TABLE tweet_urls (
     urls TEXT,
     PRIMARY KEY (id_tweets, id_urls),
     FOREIGN KEY (id_tweets) REFERENCES tweets(id_tweets) DEFERRABLE INITIALLY DEFERRED,
-    /*
-	FOREIGN KEY (id_urls) REFERENCES urls(id_urls) DEFERRABLE INITIALLY DEFERRED
-    */	
 );
 
 
@@ -106,10 +100,7 @@ CREATE TABLE tweet_media (
     urls TEXT,
     type TEXT,
     PRIMARY KEY (id_tweets, id_urls),
-/*    
-FOREIGN KEY (id_urls) REFERENCES urls(id_urls) DEFERRABLE INITIALLY DEFERRED,
-*/    
-FOREIGN KEY (id_tweets) REFERENCES tweets(id_tweets) DEFERRABLE INITIALLY DEFERRED
+    FOREIGN KEY (id_tweets) REFERENCES tweets(id_tweets) DEFERRABLE INITIALLY DEFERRED
 );
 
 /*
