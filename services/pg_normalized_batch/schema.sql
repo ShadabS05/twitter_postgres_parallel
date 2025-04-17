@@ -4,10 +4,12 @@ CREATE EXTENSION postgis;
 
 BEGIN;
 
+/*	
 CREATE TABLE urls (
     id_urls BIGSERIAL PRIMARY KEY,
     url TEXT UNIQUE
 );
+*/
 
 /*
  * Users may be partially hydrated with only a name/screen_name 
@@ -18,7 +20,7 @@ CREATE TABLE users (
     id_users BIGINT PRIMARY KEY,
     created_at TIMESTAMPTZ,
     updated_at TIMESTAMPTZ,
-    id_urls BIGINT REFERENCES urls(id_urls),
+    urls TEXT,
     friends_count INTEGER,
     listed_count INTEGER,
     favourites_count INTEGER,
@@ -29,8 +31,10 @@ CREATE TABLE users (
     name TEXT,
     location TEXT,
     description TEXT,
-    withheld_in_countries VARCHAR(2)[],
+    withheld_in_countries VARCHAR(2)[]
+    /*
     FOREIGN KEY (id_urls) REFERENCES urls(id_urls) DEFERRABLE INITIALLY DEFERRED
+    */	
 );
 
 /*
@@ -69,10 +73,12 @@ CREATE INDEX tweets_index_withheldincountries ON tweets USING gin(withheld_in_co
 
 CREATE TABLE tweet_urls (
     id_tweets BIGINT,
-    id_urls BIGINT,
+    urls TEXT,
     PRIMARY KEY (id_tweets, id_urls),
     FOREIGN KEY (id_tweets) REFERENCES tweets(id_tweets) DEFERRABLE INITIALLY DEFERRED,
-    FOREIGN KEY (id_urls) REFERENCES urls(id_urls) DEFERRABLE INITIALLY DEFERRED
+    /*
+	FOREIGN KEY (id_urls) REFERENCES urls(id_urls) DEFERRABLE INITIALLY DEFERRED
+    */	
 );
 
 
@@ -97,11 +103,13 @@ CREATE INDEX tweet_tags_index ON tweet_tags(id_tweets);
 
 CREATE TABLE tweet_media (
     id_tweets BIGINT,
-    id_urls BIGINT,
+    urls TEXT,
     type TEXT,
     PRIMARY KEY (id_tweets, id_urls),
-    FOREIGN KEY (id_urls) REFERENCES urls(id_urls) DEFERRABLE INITIALLY DEFERRED,
-    FOREIGN KEY (id_tweets) REFERENCES tweets(id_tweets) DEFERRABLE INITIALLY DEFERRED
+/*    
+FOREIGN KEY (id_urls) REFERENCES urls(id_urls) DEFERRABLE INITIALLY DEFERRED,
+*/    
+FOREIGN KEY (id_tweets) REFERENCES tweets(id_tweets) DEFERRABLE INITIALLY DEFERRED
 );
 
 /*
