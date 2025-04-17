@@ -9,11 +9,7 @@ time echo "$files" | parallel ./load_denormalized.sh
 echo '================================================================================'
 echo 'load pg_normalized'
 echo '================================================================================'
-time echo "$files" | parallel
-time for file in $files; do
-	unzip -p "$file"
-    	python3 load_tweets.py --db postgresql://postgres:pass@localhost:2067 --input "$file"
-done
+time echo "$files" | parallel python3 load_tweets.py --db postgresql://postgres:pass@localhost:2067 --input
 
 echo '================================================================================'
 echo 'load pg_normalized_batch'
